@@ -1,18 +1,34 @@
 const express = require('express');
-//const { createClient } = require('@supabase/supabase-js');
-
 const app = express();
-const port = 3001;
+const { createClient } = require('@supabase/supabase-js');
 
-// Initialisez le client Supabase
-//const supabase = createClient('VOTRE_URL_SUPABASE', 'VOTRE_CLE_API_SUPABASE');
+require('dotenv').config();
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+);
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Serveur Express en marche!');
-});
+// Import les routes
+const userRoutes = require('./routes/userRoutes');
+const etudiantRoutes = require('./routes/etudiantRoutes');
+const enseignantRoutes = require('./routes/enseignantRoutes');
+const niveauRoutes = require('./routes/niveauRoutes');
+const groupeRoutes = require('./routes/groupeRoutes');
+const encadrementRoutes = require('./routes/encadrementRoutes');
+const membreGroupeRoutes = require('./routes/membreGroupeRoutes');
 
-app.listen(port, () => {
-  console.log(`Serveur démarré sur http://localhost:${port}`);
+// Utilise les routes
+app.use('/api/users', userRoutes);
+app.use('/api/etudiants', etudiantRoutes);
+app.use('/api/enseignants', enseignantRoutes);
+app.use('/api/niveaux', niveauRoutes);
+app.use('/api/groupes', groupeRoutes);
+app.use('/api/encadrements', encadrementRoutes);
+app.use('/api/membres-groupe', membreGroupeRoutes);
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
