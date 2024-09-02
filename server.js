@@ -29,6 +29,6 @@ app.use('/api/groupes', groupeRoutes);
 app.use('/api/encadrements', encadrementRoutes);
 app.use('/api/membres-groupe', membreGroupeRoutes);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`Server is running on port ${process.env.PORT || 3001}`);
 });
