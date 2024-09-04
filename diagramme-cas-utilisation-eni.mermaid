@@ -1,0 +1,49 @@
+graph TD
+    %% Acteurs
+    User((Utilisateur))
+    Admin((Administrateur))
+    Prof((Enseignant))
+    Student((Étudiant))
+
+    %% Cas d'utilisation
+    UC1[Gérer les comptes utilisateurs]
+    UC2[Gérer les niveaux]
+    UC3[Gérer les étudiants]
+    UC4[Gérer les enseignants]
+    UC5[Créer des groupes]
+    UC6[Attribuer des encadreurs]
+    UC7[Consulter les informations du groupe]
+    UC8[S'inscrire à un groupe]
+    UC9[Consulter la liste des étudiants]
+    UC10[Consulter la liste des groupes encadrés]
+
+    %% Relations
+    Admin -->|Réalise| UC1
+    Admin -->|Réalise| UC2
+    Admin -->|Réalise| UC3
+    Admin -->|Réalise| UC4
+    Admin -->|Réalise| UC5
+    Admin -->|Réalise| UC6
+
+    Prof -->|Réalise| UC9
+    Prof -->|Réalise| UC10
+
+    Student -->|Réalise| UC7
+    Student -->|Réalise| UC8
+
+    User --> Admin
+    User --> Prof
+    User --> Student
+
+    %% Inclusions
+    UC5 -.->|Inclut| UC3
+    UC6 -.->|Inclut| UC4
+    UC6 -.->|Inclut| UC5
+
+    %% Styles
+    classDef actor fill:#FF9800,stroke:#000,stroke-width:2px,color:#000;
+    class User,Admin,Prof,Student actor;
+    classDef usecase fill:#4CAF50,stroke:#000,stroke-width:2px,color:#fff;
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10 usecase;
+    linkStyle default stroke:#2196F3,stroke-width:2px;
+    linkStyle 10,11,12 stroke:#9C27B0,stroke-width:2px,stroke-dasharray: 5 5;
