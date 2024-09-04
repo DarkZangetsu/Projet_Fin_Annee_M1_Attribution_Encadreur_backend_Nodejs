@@ -1,4 +1,4 @@
-const { supabase } = require('../server');
+const { supabase } = require('../supabaseClient');
 
 exports.getGroupes = async (req, res) => {
   try {

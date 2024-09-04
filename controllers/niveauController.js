@@ -1,4 +1,4 @@
-const { supabase } = require('../server');
+const { supabase } = require('../supabaseClient');
 
 exports.getNiveaux = async (req, res) => {
   try {

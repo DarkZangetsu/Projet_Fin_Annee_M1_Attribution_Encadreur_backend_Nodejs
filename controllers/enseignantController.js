@@ -1,4 +1,4 @@
-const { supabase } = require('../server');
+const { supabase } = require('../supabaseClient');
 
 exports.getEnseignants = async (req, res) => {
   try {
