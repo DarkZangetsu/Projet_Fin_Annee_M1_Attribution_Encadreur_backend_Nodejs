@@ -48,17 +48,24 @@ exports.login = async (req, res) => {
     const { data, error } = await supabase
       .from('utilisateur')
       .select('*')
-      .match({ email, mot_de_passe: password })
-      .single();
-    if (error) throw error;
-    if (!data) return res.status(401).json({ message: 'Invalid credentials' });
-    
+      .match({ email, mot_de_passe: password });
+
+    if (error || data.length === 0) {
+      return res.status(401).json({ message: "Email ou mot de passe incorrect" });
+    }
+
     // Générer un token JWT
-    const token = jwt.sign({ id: data.id_utilisateur, email: data.email }, JWT_SECRET, { expiresIn: '1h' });
-    
-    res.status(200).json({ user: data, token });
+    const token = jwt.sign(
+      { id: data[0].id_utilisateur, email: data[0].email },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    // Répondre avec l'utilisateur et le token
+    return res.status(200).json({ userId: data[0].id_utilisateur, token });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error("Erreur lors de la connexion:", err);
+    return res.status(500).json({ message: "Erreur serveur." });
   }
 };
 
