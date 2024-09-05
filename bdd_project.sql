@@ -11,6 +11,7 @@ CREATE TABLE Utilisateur (
     derniere_connexion TIMESTAMP WITH TIME ZONE
 );
 
+
 -- Création de la table Niveau
 CREATE TABLE Niveau (
     id_niveau UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
