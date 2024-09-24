@@ -2,7 +2,7 @@ const { supabase } = require('../supabaseClient');
 
 exports.getGroupes = async (req, res) => {
   try {
-    const { data, error } = await supabase.from('Groupe').select('*');
+    const { data, error } = await supabase.from('groupe').select('*');
     if (error) throw error;
     res.status(200).json(data);
   } catch (err) {
@@ -13,7 +13,7 @@ exports.getGroupes = async (req, res) => {
 exports.getGroupe = async (req, res) => {
   try {
     const { id } = req.params;
-    const { data, error } = await supabase.from('Groupe').select('*').match({ id_groupe: id }).single();
+    const { data, error } = await supabase.from('groupe').select('*').match({ id_groupe: id }).single();
     if (error) throw error;
     res.status(200).json(data);
   } catch (err) {
@@ -23,8 +23,9 @@ exports.getGroupe = async (req, res) => {
 
 exports.createGroupe = async (req, res) => {
   try {
-    const { id_niveau, annee_academique } = req.body;
-    const { data, error } = await supabase.from('Groupe').insert({ id_niveau, annee_academique });
+    console.log(req.body);
+    const {nom_groupe, id_niveau, annee_academique } = req.body;
+    const { data, error } = await supabase.from('groupe').insert({ nom_groupe, annee_academique, id_niveau });
     if (error) throw error;
     res.status(201).json(data[0]);
   } catch (err) {
@@ -35,8 +36,8 @@ exports.createGroupe = async (req, res) => {
 exports.updateGroupe = async (req, res) => {
   try {
     const { id } = req.params;
-    const { id_niveau, annee_academique } = req.body;
-    const { data, error } = await supabase.from('Groupe').update({ id_niveau, annee_academique }).match({ id_groupe: id });
+    const {nom_groupe, id_niveau, annee_academique } = req.body;
+    const { data, error } = await supabase.from('groupe').update({ nom_groupe, annee_academique, id_niveau }).match({ id_groupe: id });
     if (error) throw error;
     res.status(200).json(data[0]);
   } catch (err) {
@@ -47,7 +48,7 @@ exports.updateGroupe = async (req, res) => {
 exports.deleteGroupe = async (req, res) => {
   try {
     const { id } = req.params;
-    const { data, error } = await supabase.from('Groupe').delete().match({ id_groupe: id });
+    const { data, error } = await supabase.from('groupe').delete().match({ id_groupe: id });
     if (error) throw error;
     res.status(204).json();
   } catch (err) {

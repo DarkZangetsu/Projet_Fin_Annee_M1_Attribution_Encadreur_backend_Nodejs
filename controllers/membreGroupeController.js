@@ -3,7 +3,7 @@ const { supabase } = require('../supabaseClient');
 exports.getMembreGroupes = async (req, res) => {
   try {
     const { data, error } = await supabase
-      .from('MembreGroupe')
+      .from('membregroupe')
       .select(`
         *,
         groupe:Groupe(*),
@@ -20,7 +20,7 @@ exports.getMembreGroupe = async (req, res) => {
   try {
     const { id } = req.params;
     const { data, error } = await supabase
-      .from('MembreGroupe')
+      .from('membregroupe')
       .select(`
         *,
         groupe:Groupe(*),
@@ -42,7 +42,7 @@ exports.createMembreGroupe = async (req, res) => {
     
     // Vérifier si l'étudiant est déjà dans un groupe pour cette année académique
     const { data: existingMembership, error: existingError } = await supabase
-      .from('MembreGroupe')
+      .from('membregroupe')
       .select('id_membre_groupe')
       .eq('id_etudiant', id_etudiant)
       .single();
@@ -53,7 +53,7 @@ exports.createMembreGroupe = async (req, res) => {
     }
 
     const { data, error } = await supabase
-      .from('MembreGroupe')
+      .from('membregroupe')
       .insert({ id_groupe, id_etudiant })
       .select()
       .single();
@@ -69,7 +69,7 @@ exports.updateMembreGroupe = async (req, res) => {
     const { id } = req.params;
     const { id_groupe, id_etudiant } = req.body;
     const { data, error } = await supabase
-      .from('MembreGroupe')
+      .from('membregroupe')
       .update({ id_groupe, id_etudiant })
       .eq('id_membre_groupe', id)
       .select()
@@ -86,7 +86,7 @@ exports.deleteMembreGroupe = async (req, res) => {
   try {
     const { id } = req.params;
     const { data, error } = await supabase
-      .from('MembreGroupe')
+      .from('membregroupe')
       .delete()
       .eq('id_membre_groupe', id)
       .select()
