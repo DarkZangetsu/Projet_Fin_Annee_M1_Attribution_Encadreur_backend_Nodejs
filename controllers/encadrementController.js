@@ -23,8 +23,15 @@ exports.getEncadrement = async (req, res) => {
 
 exports.createEncadrement = async (req, res) => {
   try {
-    const { id_groupe, id_enseignant, annee_academique } = req.body;
-    const { data, error } = await supabase.from('encadrement').insert({ id_groupe, id_enseignant, annee_academique });
+    const { id_enseignant, id_groupe, annee_academique } = req.body;
+
+   // Ensure id_groupe is a string and not an array
+    const singleIdGroupe = Array.isArray(id_groupe) ? id_groupe[0] : id_groupe;
+
+    const { data, error } = await supabase
+      .from('encadrement')
+      .insert({ id_enseignant, id_groupe: singleIdGroupe, annee_academique });
+
     if (error) throw error;
     res.status(201).json(data[0]);
   } catch (err) {
@@ -32,11 +39,13 @@ exports.createEncadrement = async (req, res) => {
   }
 };
 
+
+
 exports.updateEncadrement = async (req, res) => {
   try {
     const { id } = req.params;
-    const { id_groupe, id_enseignant, annee_academique } = req.body;
-    const { data, error } = await supabase.from('encadrement').update({ id_groupe, id_enseignant, annee_academique }).match({ id_encadrement: id });
+    const { id_enseignant, id_groupe, annee_academique } = req.body;
+    const { data, error } = await supabase.from('encadrement').update({  id_enseignant, id_groupe, annee_academique }).match({ id_encadrement: id });
     if (error) throw error;
     res.status(200).json(data[0]);
   } catch (err) {

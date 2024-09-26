@@ -5,9 +5,7 @@ exports.getMembreGroupes = async (req, res) => {
     const { data, error } = await supabase
       .from('membregroupe')
       .select(`
-        *,
-        groupe:Groupe(*),
-        etudiant:Etudiant(*)
+        *
       `);
     if (error) throw error;
     res.status(200).json(data);
@@ -22,9 +20,7 @@ exports.getMembreGroupe = async (req, res) => {
     const { data, error } = await supabase
       .from('membregroupe')
       .select(`
-        *,
-        groupe:Groupe(*),
-        etudiant:Etudiant(*)
+        *
       `)
       .eq('id_membre_groupe', id)
       .single();
@@ -40,7 +36,6 @@ exports.createMembreGroupe = async (req, res) => {
   try {
     const { id_groupe, id_etudiant } = req.body;
     
-    // Vérifier si l'étudiant est déjà dans un groupe pour cette année académique
     const { data: existingMembership, error: existingError } = await supabase
       .from('membregroupe')
       .select('id_membre_groupe')
