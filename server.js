@@ -30,6 +30,7 @@ const groupeRoutes = require('./routes/groupeRoutes');
 const encadrementRoutes = require('./routes/encadrementRoutes');
 const membreGroupeRoutes = require('./routes/membreGroupeRoutes');
 const checkAuthRoutes = require('./routes/checkAuthRoute');
+const afficheRoutes = require('./routes/afficheRoute');
 
 // Les routes
 app.use('/api/users', userRoutes);
@@ -40,6 +41,7 @@ app.use('/api/groupes', authMiddleware, groupeRoutes);
 app.use('/api/encadrements', authMiddleware, encadrementRoutes);
 app.use('/api/membres-groupe', authMiddleware, membreGroupeRoutes);
 app.use('/api/check-auth', checkAuthRoutes); 
+app.use('/api/display', authMiddleware, afficheRoutes);
 
 // Middleware de gestion des erreurs
 app.use((err, req, res, next) => {
